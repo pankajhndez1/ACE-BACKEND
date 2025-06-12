@@ -5,11 +5,13 @@ const cookieParser =require("cookie-parser");
 const userRouter = require("./routes/user");
 const blogRouter = require("./routes/blog");
 const homeRouter = require("./routes/home");
+const { checkForAuthenticationCookie } = require("./middleware");
+const { COOKIE_NAME } = require("./constant");
 const app = express();
 const PORT = 8000;
 app.use(express.urlencoded({extended:true}))
 app.use(cookieParser())
-
+app.use(checkForAuthenticationCookie(COOKIE_NAME))
 const DB_NAME = "ACE";
 mongoose.connect(`mongodb://localhost:27017/${DB_NAME}`).then(() => {
   console.log("connected to mongodb!!");

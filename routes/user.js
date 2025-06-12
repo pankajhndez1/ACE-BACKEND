@@ -10,15 +10,20 @@ userRouter.get("/signup", (req, res) => {
 
 userRouter.post("/signup", async (req, res) => {
   console.log(req.body, "<<=====req.body");
-
-  const { email, password, fullName } = req.body;
-  const resp = await User.create({
-    email: email,
-    password: password,
-    fullName: fullName,
-  });
-
-  return res.redirect("/");
+  try {
+    const { email, password, fullName } = req.body;
+    const resp = await User.create({
+      email: email,
+      password: password,
+      fullName: fullName,
+    });
+    return res.redirect("/");
+  } catch (error) {
+    console.error("Signup error:", error);
+    return res.render("signup", {
+      error: error.message || "Signup failed. Please try again.",
+    });
+  }
 });
 userRouter.get("/signin", (req, res) => {
   return res.render("signin");
@@ -39,13 +44,13 @@ userRouter.post("/signin", async (req, res) => {
   try {
     const token = await User.matchPasswordAndGenerateToken(email, password);
     res.cookie(COOKIE_NAME, token).redirect("/");
+    req.user = user;
+    return; // Stop further execution after sending response
   } catch (error) {
-    res.render("signin", {
+    return res.render("signin", {
       error: "Incorrect password",
     });
   }
-
-  return res.redirect("/");
 });
 
 module.exports = userRouter;
