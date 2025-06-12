@@ -5,6 +5,17 @@ const Comment = require("../models/comment");
 
 const blogRouter = express.Router();
 
+
+
+blogRouter.get("/", async (req, res) => {
+  const resp = await Blog.find({});
+  console.log(resp,'resp')
+  return res.render("home", {
+    blogs: resp,
+  });
+});
+
+
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, "./public/uploads");
@@ -23,12 +34,11 @@ blogRouter.get("/signUp", (req, res) => {
 
 blogRouter.post("/", upload.single("coverImage"), async (req, res) => {
   const { title, body } = req.body;
-  console.log(req?.body,'<<<<++++++++++++++++++++++++++req.body')
   const blog = await Blog.create({
     body,
     title,
     createdBy: req.user._id,
-    coverImageURL: `/uploads/${req?.body?.file?.fileName}`,
+    coverImageUrl: `/uploads/${req?.file?.filename}`,
   });
 
   return res.redirect(`blog/${blog._id}`);
@@ -45,7 +55,6 @@ blogRouter.get("/:id", async (req, res) => {
   const blog = await Blog.findById(blogId).populate("createdBy");
   const comments = await Comment.find({blogId:blogId}).populate("createdBy")
 
-  console.log(blog,'<<<<<<<<<<ye dekh');
   return res.render("blog",{
    user:req.user,
    blog,
@@ -70,5 +79,6 @@ blogRouter.get("/signIn", (req, res) => {
 });
 
 module.exports = blogRouter;
+
 
 
