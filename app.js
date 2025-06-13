@@ -7,6 +7,7 @@ const blogRouter = require("./routes/blog");
 const homeRouter = require("./routes/home");
 const { checkForAuthenticationCookie } = require("./middleware");
 const { COOKIE_NAME } = require("./constant");
+const { favRouter } = require("./routes/favourites");
 const app = express();
 const PORT = 8000;
 app.use(express.urlencoded({extended:true}))
@@ -22,4 +23,5 @@ app.set("views",path.resolve("./views"));
 app.use('/user',userRouter);
 app.use('/blog',blogRouter);
 app.use('/',homeRouter)
+app.use('/fav',favRouter)
 app.listen(PORT, () => console.log(`Server running on ${PORT}`));

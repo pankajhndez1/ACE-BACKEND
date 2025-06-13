@@ -5,16 +5,23 @@ const Comment = require("../models/comment");
 
 const blogRouter = express.Router();
 
-
-
 blogRouter.get("/", async (req, res) => {
   const resp = await Blog.find({});
-  console.log(resp,'resp')
+
   return res.render("home", {
     blogs: resp,
   });
 });
 
+
+blogRouter.get("/api", async (req, res) => {
+  console.log(req.user._id, 'req.user._id');
+  const resp = await Blog.find().populate("createdBy");
+
+  return res.json({
+    blogs: resp,
+  });
+});
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {

@@ -1,9 +1,14 @@
 const express = require("express");
+const Blog = require("../models/blog");
 
 const homeRouter = express.Router();
 
-homeRouter.get('/',(req,res)=>{
-   return res.render('home')
+homeRouter.get('/',async(req,res)=>{
+  const resp = await Blog.find({});
+  
+  return res.render("home", {
+    blogs: resp,
+  });
 })
 
 
