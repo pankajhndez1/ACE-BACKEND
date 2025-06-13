@@ -9,7 +9,7 @@ userRouter.get("/signup", (req, res) => {
 });
 
 userRouter.post("/signup", async (req, res) => {
-  console.log(req.body, "<<=====req.body");
+ 
   try {
     const { email, password, fullName } = req.body;
     const resp = await User.create({
@@ -30,7 +30,7 @@ userRouter.get("/signin", (req, res) => {
 });
 
 userRouter.post("/signin", async (req, res) => {
-  console.log(req.body, "<<=====req.body");
+
 
   const { email, password } = req.body;
   const user = await User.findOne({

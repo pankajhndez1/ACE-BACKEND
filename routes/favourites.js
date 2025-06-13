@@ -6,7 +6,7 @@ const favRouter = express.Router();
 
 favRouter.get("/", async (req, res) => {
   const userLikedBlogs = await Fav.find({});
-  console.log(userLikedBlogs, "<<===userLikedBlogs");
+
 
   return res.status(200).json({
     data: userLikedBlogs,

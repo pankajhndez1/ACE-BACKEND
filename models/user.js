@@ -34,9 +34,6 @@ const userSchema = mongoose.Schema(
 
 userSchema.pre("save", function ( next) {
   const user = this;
-  console.log(this, "<==== this keyword holds pre save");
-
-
   if (!user.isModified("password")) return;
 
   const salt = randomBytes(16).toString();

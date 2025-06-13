@@ -53,7 +53,6 @@
         document.querySelectorAll('.like-icon').forEach(icon => {
             icon.addEventListener('click', async function () {
                 const blogId = this.getAttribute('data-id');
-                console.log('Sending like for blog:', blogId);
 
                 try {
                     const response = await fetch(`/fav/${blogId}`, {

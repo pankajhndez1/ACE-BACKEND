@@ -15,7 +15,7 @@ blogRouter.get("/", async (req, res) => {
 
 
 blogRouter.get("/api", async (req, res) => {
-  console.log(req.user._id, 'req.user._id');
+ 
   const resp = await Blog.find().populate("createdBy");
 
   return res.json({
