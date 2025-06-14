@@ -4,13 +4,16 @@ const likedBlogsSchema = new mongoose.Schema(
   {
     likedBlogs: [
       {
-        blog: {
-          type: mongoose.Schema.Types.ObjectId,
-          ref: "blog", 
-          required: true,
-        },
-      }
-    ]
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "blogs",
+        required: true,
+      },
+    ],
+     user: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "user",
+      required: true,
+    },
   },
   { timestamps: true }
 );
